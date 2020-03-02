@@ -4,7 +4,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 
-public interface IPokemonLocalRepo {
+public interface IPokemonsLocalRepo {
     Observable<List<Pokemons>> getPokemons();
 
     void savePokemons(List<Pokemons> pokemons);

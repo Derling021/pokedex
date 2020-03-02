@@ -1,14 +1,16 @@
-package com.example.pokedex.models.pokemon;
+package com.example.pokedex.models.pokemons;
 
-import com.aimservices.telabook.networking.BaseRemote;
+import com.example.pokedex.BuildConfig;
+import com.example.pokedex.networking.BaseRemote;
 
 import java.util.List;
 
 import io.reactivex.Observable;
 
-public class AgentsRemoteRepo extends BaseRemote implements IAgentsRemoteRepo {
+public class PokemonsRemoteRepo extends BaseRemote implements IPokemonsRemoteRepo {
     @Override
-    public Observable<List<Pokemon>> getAgents() {
-        return create(AgentsService.class).getAgents();
+    public Observable<List<Pokemons>> getPokemons() {
+        return create(PokemonsService.class,BuildConfig.API_URL).getPokemons();
     }
 }
+

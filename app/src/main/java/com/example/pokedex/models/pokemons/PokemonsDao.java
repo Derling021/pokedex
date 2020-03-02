@@ -10,11 +10,11 @@ import java.util.List;
 import io.reactivex.Observable;
 
 @Dao
-public interface PokemonDao {
+public interface PokemonsDao {
 
-    @Query("SELECT * FROM Pokemon")
-    Observable<List<Pokemon>> getAgents(int companyId);
+    @Query("SELECT * FROM Pokemons")
+    Observable<List<Pokemons>> getPokemons();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void saveAgents(List<Pokemon> agents);
+    void savePokemons(List<Pokemons> pokemons);
 }

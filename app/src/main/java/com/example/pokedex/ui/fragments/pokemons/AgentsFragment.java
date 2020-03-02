@@ -1,4 +1,4 @@
-package com.example.pokedex.ui.fragments.sms;
+package com.example.pokedex.ui.fragments.pokemons;
 
 import android.content.Context;
 import android.os.Bundle;

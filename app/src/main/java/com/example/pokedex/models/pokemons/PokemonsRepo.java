@@ -1,38 +1,37 @@
-package com.example.pokedex.models.pokemon;
+package com.example.pokedex.models.pokemons;
 
-import com.aimservices.telabook.utils.Constants;
-import com.aimservices.telabook.utils.PreferenceHelper;
+/*import com.aimservices.telabook.utils.Constants;
+import com.aimservices.telabook.utils.PreferenceHelper;*/
 
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
 
-public class AgentsRepo implements IAgentsRepo {
+public class PokemonsRepo implements IPokemonsRepo {
 
 
-    private IAgentsRemoteRepo remoteRepo;
-    private IAgentsLocalRepo localRepo;
+    private IPokemonsRemoteRepo remoteRepo;
+    private IPokemonsLocalRepo localRepo;
 
-    public AgentsRepo(IAgentsRemoteRepo remoteRepo, IAgentsLocalRepo localRepo) {
+    public PokemonsRepo(IPokemonsRemoteRepo remoteRepo, IPokemonsLocalRepo localRepo) {
         this.remoteRepo = remoteRepo;
         this.localRepo = localRepo;
     }
 
 
     @Override
-    public Observable<List<Pokemon>> getAgents() {
-        int companyId = PreferenceHelper.getSharedPreferenceInt(Constants.CURRENT_COMPANY_ID, -1);
+    public Observable<List<Pokemons>> getPokemons() {
+       // int companyId = PreferenceHelper.getSharedPreferenceInt(Constants.CURRENT_COMPANY_ID, -1);
         return Observable.mergeDelayError(
-                localRepo.getAgentsForCampany(companyId).filter(agents -> !agents.isEmpty()),
-                remoteRepo.getAgents().doOnNext(agents -> {
-                    ArrayList<Pokemon> newAgentsList = new ArrayList<>();
-                    for (Pokemon a :
-                            agents) {
-                        a.setCompanyId(companyId);
-                        newAgentsList.add(a);
+                localRepo.getPokemons(),
+                remoteRepo.getPokemons().doOnNext(pokemon -> {
+                    ArrayList<Pokemons> newPokemonsList = new ArrayList<>();
+                    for (Pokemons a : pokemon) {
+                        newPokemonsList.add(a);
                     }
-                    localRepo.saveAgents(newAgentsList);
+                    localRepo.savePokemons(newPokemonsList);
                 }));
     }
+
 }

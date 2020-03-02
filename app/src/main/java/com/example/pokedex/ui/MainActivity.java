@@ -1,4 +1,4 @@
-package com.aimservices.telabook.ui;
+package com.example.pokedex.ui;
 
 import android.os.Bundle;
 
@@ -11,7 +11,6 @@ import androidx.navigation.Navigation;
 import com.aimservices.telabook.R;
 import com.aimservices.telabook.models.agents.Agent;
 import com.aimservices.telabook.models.company.Company;
-import com.aimservices.telabook.models.user.User;
 import com.aimservices.telabook.ui.fragments.auth.AuthenticationViewModel;
 import com.aimservices.telabook.ui.fragments.company_selector.CompanySelectionFragment;
 import com.aimservices.telabook.ui.fragments.company_selector.CompanyViewModel;
@@ -22,10 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.internal.InternalTokenResult;
 
-import java.util.concurrent.TimeUnit;
-
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity implements CompanySelectionFragment.OnCompanySelected, AgentsFragment.OnAgentInteractionListener {

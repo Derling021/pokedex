@@ -1,10 +1,10 @@
-package com.example.pokedex.models.pokemon;
+package com.example.pokedex.models.pokemons;
 
 import java.util.List;
 
 import io.reactivex.Observable;
 
-public interface IAgentsRepo {
+public interface IPokemonsRepo {
 
-    Observable<List<Pokemon>> getAgents();
+    Observable<List<Pokemons>> getPokemons();
 }

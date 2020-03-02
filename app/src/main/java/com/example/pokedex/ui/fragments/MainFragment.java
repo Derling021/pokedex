@@ -1,4 +1,4 @@
-package com.aimservices.telabook.ui.fragments;
+package com.example.pokedex.ui.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
