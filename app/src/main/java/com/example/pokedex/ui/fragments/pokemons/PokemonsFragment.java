@@ -11,9 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.aimservices.telabook.R;
-import com.aimservices.telabook.models.agents.Agent;
-import com.aimservices.telabook.models.firebase.WasNotSeen;
+import com.example.pokedex.R;
+import com.example.pokedex.models.pokemons.Pokemons;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -26,18 +25,17 @@ import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 
-public class AgentsFragment extends Fragment {
-    private OnAgentInteractionListener mListener;
+public class PokemonsFragment extends Fragment {
+    private OnPokemonInteractionListener mListener;
 
     private CompositeDisposable disposables = new CompositeDisposable();
-    private AgentsAdapter agentsAdapter;
-    private RecyclerView rvAgents;
+    private PokemonsAdapter pokemonsAdapter;
+    private RecyclerView rvPokemons;
     private View errorLayout;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        PokemonsViewModel agentsViewModel = new ViewModelProvider(requireActivity()).get(PokemonsViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_agents, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        PokemonsViewModel pokemonsViewModel = new ViewModelProvider(requireActivity()).get(PokemonsViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_pokemons, container, false);
         agentsAdapter = new AgentsAdapter(mListener);
         rvAgents = root.findViewById(R.id.agents_list);
         rvAgents.setHasFixedSize(true);
@@ -96,7 +94,7 @@ public class AgentsFragment extends Fragment {
         }
     }
 
-    public interface OnAgentInteractionListener {
-        void agentTouched(Agent agent);
+    public interface OnPokemonInteractionListener {
+        void pokemonTouched(Pokemons pokemon);
     }
 }
