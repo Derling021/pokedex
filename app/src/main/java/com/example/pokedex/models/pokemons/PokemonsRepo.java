@@ -1,8 +1,5 @@
 package com.example.pokedex.models.pokemons;
 
-/*import com.aimservices.telabook.utils.Constants;
-import com.aimservices.telabook.utils.PreferenceHelper;*/
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,14 +21,11 @@ public class PokemonsRepo implements IPokemonsRepo {
     public Observable<List<Pokemons>> getPokemons() {
        // int companyId = PreferenceHelper.getSharedPreferenceInt(Constants.CURRENT_COMPANY_ID, -1);
         return Observable.mergeDelayError(
-                localRepo.getPokemons(),
-                remoteRepo.getPokemons().doOnNext(pokemon -> {
-                    ArrayList<Pokemons> newPokemonsList = new ArrayList<>();
-                    for (Pokemons a : pokemon) {
-                        newPokemonsList.add(a);
-                    }
+                localRepo.getPokemons().filter(pokemons -> !pokemons.isEmpty()), // Esto te puede retornar vacío
+                remoteRepo.getPokemons().doOnNext(pokemonResponse -> {
+                    ArrayList<Pokemons> newPokemonsList = new ArrayList<>(pokemonResponse.getResults());
                     localRepo.savePokemons(newPokemonsList);
-                }));
+                }).map(PokemonResponse::getResults));
     }
 
 }

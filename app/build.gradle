@@ -10,21 +10,42 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
+
+        debug {
+            applicationIdSuffix ".debug"
+            debuggable true
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    sourceSets {
-        main {
-            java {
-                srcDirs 'src/main/java', 'src/main/java/pokemon', 'src/main/java/com.example.pokedex/pokemon', 'src/main/java/ui'
-            }
+//    sourceSets {
+//        main {
+//            java {
+//                srcDirs 'src/main/java', 'src/main/java/pokemon', 'src/main/java/com.example.pokedex/pokemon', 'src/main/java/ui'
+//            }
+//        }
+//    }
+    flavorDimensions "env"
+    productFlavors {
+        local {
+            buildConfigField "String", "API_URL", '"https://pokeapi.co/api/v2/"'
+        }
+        dev {
+            buildConfigField "String", "API_URL", '"https://pokeapi.co/api/v2/"'
+        }
+        qa {
+            buildConfigField "String", "API_URL", '"https://pokeapi.co/api/v2/"'
+        }
+        prod {
+            buildConfigField "String", "API_URL", '"https://pokeapi.co/api/v2/"'
         }
     }
     compileOptions {
@@ -40,7 +61,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 
     implementation 'com.google.firebase:firebase-database:19.2.1'
-    implementation 'com.google.firebase:firebase-messaging:20.1.0'
+    implementation 'com.google.firebase:firebase-messaging:20.1.2'
     compileOnly 'org.projectlombok:lombok:1.18.12'
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
 
@@ -52,9 +73,9 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
     // ---- FIREBASE
-    implementation 'com.google.firebase:firebase-core:17.2.2'
+    implementation 'com.google.firebase:firebase-core:17.2.3'
     // Recommended: Add the Firebase SDK for Google Analytics.
-    implementation 'com.google.firebase:firebase-analytics:17.2.2'
+    implementation 'com.google.firebase:firebase-analytics:17.2.3'
     // Add the Firebase SDK for Crashlytics.
     implementation 'com.google.firebase:firebase-crashlytics:17.0.0-beta01'
 

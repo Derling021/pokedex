@@ -10,7 +10,6 @@ import com.example.pokedex.models.pokemons.Pokemons;
 import com.example.pokedex.models.pokemons.PokemonsDao;
 
 @Database(entities = {Pokemons.class}, version = 1, exportSchema = false)
-//@TypeConverters(DateConverter.class)
 public abstract class PokedexDatabase extends RoomDatabase {
 
     private static volatile PokedexDatabase INSTANCE;

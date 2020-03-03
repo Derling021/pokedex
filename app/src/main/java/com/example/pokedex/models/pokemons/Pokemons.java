@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
 @Data
-@Entity(indices = {@Index(value = {"name"})})
+@Entity(indices = {@Index(value = "pokemonName")})
 public class Pokemons {
     @PrimaryKey(autoGenerate = true)
     private int id =  0;

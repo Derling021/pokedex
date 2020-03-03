@@ -1,5 +1,6 @@
 package com.example.pokedex.ui.fragments.pokemons;
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -32,12 +33,21 @@ public class PokemonsAdapter extends RecyclerView.Adapter<PokemonsAdapter.ViewHo
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.pokemon_item, parent, false);
+        return new PokemonsAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        if (isShimmering){
+            holder.shimmer.startShimmer();
+        }else{
+            holder.shimmer.stopShimmer();
+            holder.shimmer.hideShimmer();
+            holder.bind(mPokemons.get(position));
 
+        }
     }
 
     @Override
@@ -65,7 +75,7 @@ public class PokemonsAdapter extends RecyclerView.Adapter<PokemonsAdapter.ViewHo
 
         void bind(Pokemons pokemons) {
             mPokemons = pokemons;
-            pokemonName.setText(pokemons.getpokemonName);
+            pokemonName.setText(pokemons.getPokemonName());
             /*if (agent.getUnreadMessagesCount() < 1) {
                 messageCount.setVisibility(View.GONE);
             } else {
@@ -79,8 +89,8 @@ public class PokemonsAdapter extends RecyclerView.Adapter<PokemonsAdapter.ViewHo
             });
 
             pokemonName.setBackground(null);
-            if (pokemons.getpokemonUrl() != null) {
-                Picasso.get().load(pokemons.getpokemonUrl()).into(pokemonUrl);
+            if (pokemons.getPokemonUrl() != null) {
+                Picasso.get().load(pokemons.getPokemonUrl()).into(pokemonUrl);
             }
 
 

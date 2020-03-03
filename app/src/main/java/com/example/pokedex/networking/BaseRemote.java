@@ -1,5 +1,6 @@
 package com.example.pokedex.networking;
 
+import com.example.pokedex.BuildConfig;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -10,12 +11,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BaseRemote {
 
-    protected <T> T create(Class<T> clazz, String baseUrl) {
-        T service = retrofit(baseUrl).create(clazz);
+    protected <T> T create(Class<T> clazz) {
+        T service = retrofit().create(clazz);
         return service;
     }
 
-    private Retrofit retrofit(String baseUrl) {
+    private Retrofit retrofit() {
         OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
                 .build();
 
@@ -24,7 +25,7 @@ public class BaseRemote {
         Gson customGson = gsonBuilder.create();
 
         return new Retrofit.Builder()
-                .baseUrl(baseUrl).client(okHttpClient)
+                .baseUrl(BuildConfig.API_URL).client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create(customGson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();

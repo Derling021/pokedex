@@ -14,10 +14,5 @@
         app:layoutManager="LinearLayoutManager"
         tools:listitem="@layout/pokemon_item"
         />
-    <include
-        android:id="@+id/error_layout"
-        layout="@layout/error_retry_view"
-        android:visibility="gone"
-        />
 
 </LinearLayout>

@@ -30,23 +30,17 @@ public class PokemonsFragment extends Fragment {
     private CompositeDisposable disposables = new CompositeDisposable();
     private PokemonsAdapter pokemonsAdapter;
     private RecyclerView rvPokemons;
-    private View errorLayout;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         PokemonsViewModel pokemonsViewModel = new ViewModelProvider(requireActivity()).get(PokemonsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_pokemons, container, false);
         pokemonsAdapter = new PokemonsAdapter(mListener);
-        rvPokemons = root.findViewById(R.id.agents_list);
+        rvPokemons = root.findViewById(R.id.pokemon_list);
         rvPokemons.setHasFixedSize(true);
         rvPokemons.setItemViewCacheSize(20);
         pokemonsAdapter.setHasStableIds(true);
         rvPokemons.setAdapter(pokemonsAdapter);
-        errorLayout = root.findViewById(R.id.error_layout);
-        errorLayout.findViewById(R.id.retryBtn).setOnClickListener(v -> {
-            rvPokemons.setVisibility(View.VISIBLE);
-            errorLayout.setVisibility(View.GONE);
-            disposables.add(pokemonsViewModel.getPokemons().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this::pokemonsObtained, this::errorFetchinPokemons));
-        });
+
         disposables.add(pokemonsViewModel.getPokemons().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this::pokemonsObtained, this::errorFetchinPokemons));
         //pokemonsViewModel.getUnreadConversations().observe(getViewLifecycleOwner(), this::conversationsObtained);
         return root;
@@ -59,13 +53,11 @@ public class PokemonsFragment extends Fragment {
     private void errorFetchinPokemons(Throwable throwable) {
         Timber.w(throwable, "Error obtaining pokemons");
         rvPokemons.setVisibility(View.GONE);
-        errorLayout.setVisibility(View.VISIBLE);
     }
 
     private void pokemonsObtained(List<Pokemons> pokemons) {
         Timber.d("%d pokemons obtained!!", pokemons.size());
         rvPokemons.setVisibility(View.VISIBLE);
-        errorLayout.setVisibility(View.GONE);
         pokemonsAdapter.setPokemons(pokemons);
     }
 
