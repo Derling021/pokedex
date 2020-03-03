@@ -36,41 +36,38 @@ public class PokemonsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         PokemonsViewModel pokemonsViewModel = new ViewModelProvider(requireActivity()).get(PokemonsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_pokemons, container, false);
-        agentsAdapter = new AgentsAdapter(mListener);
-        rvAgents = root.findViewById(R.id.agents_list);
-        rvAgents.setHasFixedSize(true);
-        rvAgents.setItemViewCacheSize(20);
-        agentsAdapter.setHasStableIds(true);
-        rvAgents.setAdapter(agentsAdapter);
+        pokemonsAdapter = new PokemonsAdapter(mListener);
+        rvPokemons = root.findViewById(R.id.agents_list);
+        rvPokemons.setHasFixedSize(true);
+        rvPokemons.setItemViewCacheSize(20);
+        pokemonsAdapter.setHasStableIds(true);
+        rvPokemons.setAdapter(pokemonsAdapter);
         errorLayout = root.findViewById(R.id.error_layout);
         errorLayout.findViewById(R.id.retryBtn).setOnClickListener(v -> {
-            rvAgents.setVisibility(View.VISIBLE);
+            rvPokemons.setVisibility(View.VISIBLE);
             errorLayout.setVisibility(View.GONE);
-            disposables.add(agentsViewModel.getAgents().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this::agentsObtained, this::errorFetchinAgents));
+            disposables.add(pokemonsViewModel.getPokemons().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this::pokemonObtained, this::errorFetchinPokemons));
         });
-        disposables.add(agentsViewModel.getAgents().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this::agentsObtained, this::errorFetchinAgents));
-        agentsViewModel.getUnreadConversations().observe(getViewLifecycleOwner(), this::conversationsObtained);
+        disposables.add(pokemonsViewModel.getPokemons().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this::pokemonObtained, this::errorFetchinPokemons));
+        //pokemonsViewModel.getUnreadConversations().observe(getViewLifecycleOwner(), this::conversationsObtained);
         return root;
     }
 
-    private void conversationsObtained(ArrayList<WasNotSeen> wasNotSeens) {
+ /*   private void conversationsObtained(ArrayList<WasNotSeen> wasNotSeens) {
         agentsAdapter.updateUnreadMessages(wasNotSeens);
-    }
+    }*/
 
-    private void errorFetchinAgents(Throwable throwable) {
-        Timber.w(throwable, "Error obtaining agents");
-        rvAgents.setVisibility(View.GONE);
+    private void errorFetchinPokemons(Throwable throwable) {
+        Timber.w(throwable, "Error obtaining pokemons");
+        rvPokemons.setVisibility(View.GONE);
         errorLayout.setVisibility(View.VISIBLE);
     }
 
-    private void agentsObtained(List<Agent> agents) {
-        Timber.d("%d Agents obtained!!", agents.size());
-        rvAgents.setVisibility(View.VISIBLE);
+    private void pokemonsObtained(List<Pokemons> pokemons) {
+        Timber.d("%d pokemons obtained!!", pokemons.size());
+        rvPokemons.setVisibility(View.VISIBLE);
         errorLayout.setVisibility(View.GONE);
-        agentsAdapter.setAgents(agents);
-
-
-
+        pokemonsAdapter.setPokemons(pokemons);
     }
 
     @Override
@@ -86,8 +83,8 @@ public class PokemonsFragment extends Fragment {
     @Override
     public void onAttach(@NotNull Context context) {
         super.onAttach(context);
-        if (context instanceof OnAgentInteractionListener) {
-            mListener = (OnAgentInteractionListener) context;
+        if (context instanceof OnPokemonInteractionListener) {
+            mListener = (OnPokemonInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnAgentInteractionListener");

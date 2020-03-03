@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutManager="LinearLayoutManager"
-        tools:listitem="@layout/agent_item"
+        tools:listitem="@layout/pkemon_item"
         />
     <include
         android:id="@+id/error_layout"
