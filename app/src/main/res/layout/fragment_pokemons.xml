@@ -6,13 +6,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_gravity="center"
-    tools:context=".ui.fragments.sms.AgentsFragment">
+    tools:context=".ui.fragments.pokemons.PokemonsFragment">
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/agents_list"
+        android:id="@+id/pokemon_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutManager="LinearLayoutManager"
-        tools:listitem="@layout/pkemon_item"
+        tools:listitem="@layout/pokemon_item"
         />
     <include
         android:id="@+id/error_layout"

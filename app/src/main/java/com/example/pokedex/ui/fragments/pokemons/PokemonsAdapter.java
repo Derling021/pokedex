@@ -48,8 +48,8 @@ public class PokemonsAdapter extends RecyclerView.Adapter<PokemonsAdapter.ViewHo
     class ViewHolder extends RecyclerView.ViewHolder {
 
         final ShimmerFrameLayout shimmer;
-        final CircleImageView agentsProfile;
-        Pokemons mPokemon;
+        final CircleImageView pokemonUrl;
+        Pokemons mPokemons;
         final View mView;
         final MaterialTextView pokemonName;
 
@@ -57,33 +57,30 @@ public class PokemonsAdapter extends RecyclerView.Adapter<PokemonsAdapter.ViewHo
             super(view);
             mView = view;
             this.shimmer = view.findViewById(R.id.shimmer_view_container);
-            this.agentsProfile = view.findViewById(R.id.url_pokemon);
+            this.pokemonUrl = view.findViewById(R.id.url_pokemon);
 
             this.pokemonName = view.findViewById(R.id.pokemon_name);
             //this.messageCount = view.findViewById(R.id.message_count);
         }
 
-        void bind(Agent agent) {
-            mAgent = agent;
-            agentName.setText(agent.getPersonName());
-
-            if (agent.getUnreadMessagesCount() < 1) {
+        void bind(Pokemons pokemons) {
+            mPokemons = pokemons;
+            pokemonName.setText(pokemons.getpokemonName);
+            /*if (agent.getUnreadMessagesCount() < 1) {
                 messageCount.setVisibility(View.GONE);
             } else {
                 messageCount.setVisibility(View.VISIBLE);
                 messageCount.setText(String.valueOf(agent.getUnreadMessagesCount()));
-            }
+            }*/
             mView.setOnClickListener(v -> {
                 if (null != mListener) {
-                    mListener.agentTouched(agent);
+                    mListener.pokemonTouched(pokemons);
                 }
             });
 
-            agentName.setBackground(null);
-            agentsProfile.setBackground(null);
-            agentsProfile.setBorderColor(mView.getContext().getColor(R.color.colorPrimary));
-            if (agent.getProfileImageUrl() != null) {
-                Picasso.get().load(agent.getProfileImageUrl()).into(agentsProfile);
+            pokemonName.setBackground(null);
+            if (pokemons.getpokemonUrl() != null) {
+                Picasso.get().load(pokemons.getpokemonUrl()).into(pokemonUrl);
             }
 
 
@@ -93,6 +90,7 @@ public class PokemonsAdapter extends RecyclerView.Adapter<PokemonsAdapter.ViewHo
     public void setPokemons(List<Pokemons> pokemons) {
         isShimmering = false;
         this.mPokemons=new ArrayList<>(pokemons);
+        notifyDataSetChanged();
         //refreshData();
     }
 

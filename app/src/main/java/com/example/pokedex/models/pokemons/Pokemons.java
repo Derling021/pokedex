@@ -13,7 +13,7 @@ public class Pokemons {
     @PrimaryKey(autoGenerate = true)
     private int id =  0;
     @SerializedName("name")
-    private String name;
+    private String pokemonName;
     @SerializedName("url")
-    private String url;
+    private String pokemonUrl;
 }

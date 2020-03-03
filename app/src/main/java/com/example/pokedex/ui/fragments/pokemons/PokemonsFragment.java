@@ -16,7 +16,6 @@ import com.example.pokedex.models.pokemons.Pokemons;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -46,9 +45,9 @@ public class PokemonsFragment extends Fragment {
         errorLayout.findViewById(R.id.retryBtn).setOnClickListener(v -> {
             rvPokemons.setVisibility(View.VISIBLE);
             errorLayout.setVisibility(View.GONE);
-            disposables.add(pokemonsViewModel.getPokemons().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this::pokemonObtained, this::errorFetchinPokemons));
+            disposables.add(pokemonsViewModel.getPokemons().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this::pokemonsObtained, this::errorFetchinPokemons));
         });
-        disposables.add(pokemonsViewModel.getPokemons().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this::pokemonObtained, this::errorFetchinPokemons));
+        disposables.add(pokemonsViewModel.getPokemons().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this::pokemonsObtained, this::errorFetchinPokemons));
         //pokemonsViewModel.getUnreadConversations().observe(getViewLifecycleOwner(), this::conversationsObtained);
         return root;
     }
