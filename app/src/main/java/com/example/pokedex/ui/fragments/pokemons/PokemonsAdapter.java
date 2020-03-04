@@ -1,5 +1,6 @@
 package com.example.pokedex.ui.fragments.pokemons;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import timber.log.Timber;
 
 public class PokemonsAdapter extends RecyclerView.Adapter<PokemonsAdapter.ViewHolder> {
 
@@ -73,6 +75,7 @@ public class PokemonsAdapter extends RecyclerView.Adapter<PokemonsAdapter.ViewHo
             //this.messageCount = view.findViewById(R.id.message_count);
         }
 
+        @SuppressLint("TimberArgCount")
         void bind(Pokemons pokemons) {
             mPokemons = pokemons;
             pokemonName.setText(pokemons.getPokemonName());
@@ -90,7 +93,12 @@ public class PokemonsAdapter extends RecyclerView.Adapter<PokemonsAdapter.ViewHo
 
             pokemonName.setBackground(null);
             if (pokemons.getPokemonUrl() != null) {
-                Picasso.get().load(pokemons.getPokemonUrl()).into(pokemonUrl);
+
+                String s1=pokemons.getPokemonUrl();
+                 String s2= s1.replace("https://pokeapi.co/api/v2/pokemon/","");
+                String s3=s2.replace("/","");
+                Timber.e("veamos que es",s3);
+                Picasso.get().load("https://picsum.photos/700/400?random").into(pokemonUrl);
             }
 
 
